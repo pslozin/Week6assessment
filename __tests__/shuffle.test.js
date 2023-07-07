@@ -1,26 +1,38 @@
 const shuffle = require("../src/shuffle");
-let arr = [1,2,4.7]
+let arr = [1,2,4.7,15,6,44]
 
-// describe("shuffle should...", () => {
-//   // CODE HERE
-//   const returnValue = shuffle(arr)
-//   expect(returnValue).toBe("array");
-//   // const returnValue = shuffle()
-//   //     expect(returnValue).toBe(arr)
-// });
 
-describe("shuffle should return an array", () => {
-  // CODE HERE
-  let returnValue = shuffle(arr)
-  
-  expect(typeof returnValue).toBe('object')
-  
-});
+function shuffleArray(array) {
+  let arrCopy = [...array]
+  for (let i = arrCopy.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arrCopy[i], arrCopy[j]] = [arrCopy[j], arrCopy[i]];
+  }
+  return arrCopy
+}
 
-describe("shuffle should returns an array of the same length ", () => {
-  // CODE HERE
-  let returnValue = shuffle(arr)
+describe('shuffleArray should', () => {
+  test('return an array', () => {
+      const result = shuffleArray([1, 2, 3])
+      expect(Array.isArray(result)).toBe(true)
+    })
   
-  expect(returnValue.length).toBe(arr.length)
+  test('return an array of the same length as the argument sent in', () => {
+      const input = [1, 2, 3]
+      const result = shuffleArray(input)
+      expect(result).toHaveLength(input.length)
+  })
+  
+  test('contain all the same items as the original array', () => {
+      const input = [1, 2, 3]
+      const result = shuffleArray(input)
+      expect(result.sort()).toEqual(input.sort())
+  })
+  
+  test('shuffle the items in the array', () => {
+      const input = [1, 2, 3, 4, 5]
+      const result = shuffleArray(input)
+      expect(result).not.toEqual(input)
+  })
   
 });
